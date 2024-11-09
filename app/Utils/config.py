@@ -20,4 +20,20 @@ def get_google_sheet():
         sheet = client.open(os.getenv("GOOGLE_SHEETS_NAME"))
         return sheet
     except gspread.SpreadsheetNotFound:
-        raise ValueError(f"Google Sheet with name '{sheet}' not found.")
+        raise ValueError(f"Google Sheet with name '{os.getenv('GOOGLE_SHEETS_NAME')}' not found.")
+
+
+def get_aliexpress_api_config():
+    api_key = os.getenv("RAPIDAPI_KEY")
+    api_host = os.getenv("RAPIDAPI_HOST")
+    base_url = os.getenv("RAPIDAPI_BASE_URL")
+
+    if not api_key or not api_host or not base_url:
+        raise ValueError("Missing AliExpress API configuration in environment variables")
+
+    headers = {
+        "x-rapidapi-key": api_key,
+        "x-rapidapi-host": api_host
+    }
+
+    return base_url, headers

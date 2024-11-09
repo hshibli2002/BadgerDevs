@@ -1,4 +1,4 @@
-name: Lint Codebase
+name: Lint BadgerDevs Codebase
 
 on:
   push:
