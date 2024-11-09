@@ -7,10 +7,11 @@ def create_app():
 
     # Register Blueprints
     app.register_blueprint(badgerdevs_api)
+    app.config["DEBUG"] = True
 
     return app
 
 
 if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True)
+    application = create_app()
+    application.run(debug=True)
