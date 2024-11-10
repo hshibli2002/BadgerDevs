@@ -4,7 +4,6 @@ import gspread
 class GoogleSheetsHandler:
     def __init__(self, sheet):
         self.sheet = sheet
-        print(f"Type of self.sheet: {type(self.sheet)}")
 
     def get_worksheet_data(self, worksheet_name):
         try:
@@ -32,3 +31,7 @@ class GoogleSheetsHandler:
             raise ValueError("Sheet1 not found in the Google Sheet.")
         except Exception as e:
             raise RuntimeError(f"An error occurred while adding data: {str(e)}")
+
+    def add_ecommerce_data(self, data):
+        worksheet = self.sheet.worksheet("Sheet2")
+        worksheet.append_rows(data, value_input_option="USER_ENTERED")
