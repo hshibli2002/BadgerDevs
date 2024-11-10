@@ -9,7 +9,6 @@ google_sheets_api = Blueprint("google_sheets", __name__, url_prefix="/google-she
 def get_worksheet_data():
     worksheet_name = request.args.get("worksheet_name")
     try:
-        # Get the Google Sheet object and pass it to GoogleSheetsHandler
         sheet = get_google_sheet()
         sheets_handler = GoogleSheetsHandler(sheet)
 

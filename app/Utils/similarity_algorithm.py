@@ -1,5 +1,9 @@
-from fuzzywuzzy import fuzz
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 
-def calculate_similarity(keyword, text):
-    return fuzz.token_set_ratio(keyword.lower(), text.lower()) / 100.0  # Scale to 0-1 range
+def calculate_tfidf_cosine_similarity(keyword, text):
+    documents = [keyword, text]
+    tfidf_vectorizer = TfidfVectorizer().fit_transform(documents)
+    similarity = cosine_similarity(tfidf_vectorizer)[0, 1]
+    return similarity

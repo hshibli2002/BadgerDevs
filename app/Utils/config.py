@@ -2,6 +2,9 @@ import os
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from dotenv import load_dotenv
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 
 load_dotenv()
 
@@ -23,17 +26,26 @@ def get_google_sheet():
         raise ValueError(f"Google Sheet with name '{os.getenv('GOOGLE_SHEETS_NAME')}' not found.")
 
 
-def get_aliexpress_api_config():
-    api_key = os.getenv("RAPIDAPI_KEY")
-    api_host = os.getenv("RAPIDAPI_HOST")
-    base_url = os.getenv("RAPIDAPI_BASE_URL")
-
-    if not api_key or not api_host or not base_url:
-        raise ValueError("Missing AliExpress API configuration in environment variables")
-
-    headers = {
-        "x-rapidapi-key": api_key,
-        "x-rapidapi-host": api_host
+def get_scraper_config():
+    return {
+        "base_url": os.getenv("ALIBABA_BASE_URL"),
+        "user_agent": os.getenv("USER_AGENT"),
+        "chromedriver_path": os.getenv("CHROMEDRIVER_PATH"),
     }
 
-    return base_url, headers
+
+def setup_driver():
+    config = get_scraper_config()
+    options = webdriver.ChromeOptions()
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--disable-software-rasterizer")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--headless")
+    options.add_argument(f"user-agent={config['user_agent']}")
+    options.add_argument("--remote-debugging-port=9222")
+    options.add_argument("--lang=en-GB.UTF-8")
+
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
+    return driver
