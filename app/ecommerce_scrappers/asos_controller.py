@@ -1,13 +1,14 @@
-from flask import Blueprint, jsonify, request
-from app.scrappers.alibaba_handler import fetch_alibaba_products
-from app.google_sheets.google_sheets_handler import GoogleSheetsHandler
+from flask import Blueprint, request, jsonify
+
 from app.Utils.config import get_google_sheet
 from app.Utils.formattingData import format_product_data
+from app.ecommerce_scrappers.asos_handler import fetch_asos_products
+from app.google_sheets.google_sheets_handler import GoogleSheetsHandler
 
-alibaba_api = Blueprint("alibaba_api", __name__, url_prefix="/alibaba")
+asos_api = Blueprint("asos_api", __name__, url_prefix="/asos")
 
 
-@alibaba_api.route("/search_and_store", methods=["POST"])
+@asos_api.route("/search_and_store", methods=["POST"])
 def search_and_store_products():
     data = request.get_json()
     keyword = data.get("keyword")
@@ -16,7 +17,7 @@ def search_and_store_products():
         return jsonify({"error": "Keyword parameter is required"}), 400
 
     try:
-        products = fetch_alibaba_products(keyword)
+        products = fetch_asos_products(keyword)
         formatted_data = format_product_data(products)
 
         sheets_handler = GoogleSheetsHandler(get_google_sheet())

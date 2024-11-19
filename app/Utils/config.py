@@ -3,8 +3,12 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from dotenv import load_dotenv
 from selenium import webdriver
+from selenium.common import TimeoutException, NoSuchElementException, WebDriverException
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 
 load_dotenv()
 
@@ -26,16 +30,18 @@ def get_google_sheet():
         raise ValueError(f"Google Sheet with name '{os.getenv('GOOGLE_SHEETS_NAME')}' not found.")
 
 
-def get_scraper_config():
+def get_scraper_config(website_name):
+    base_url_key = f"{website_name.upper()}_BASE_URL"
+    user_agent_key = "USER_AGENT"
+
     return {
-        "base_url": os.getenv("ALIBABA_BASE_URL"),
-        "user_agent": os.getenv("USER_AGENT"),
-        "chromedriver_path": os.getenv("CHROMEDRIVER_PATH"),
+        "base_url": os.getenv(base_url_key),
+        "user_agent": os.getenv(user_agent_key),
     }
 
 
-def setup_driver():
-    config = get_scraper_config()
+def setup_driver(website_name):
+    config = get_scraper_config(website_name)
     options = webdriver.ChromeOptions()
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-gpu")
@@ -49,3 +55,20 @@ def setup_driver():
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
     return driver
+
+
+def wait_for_page_load(driver, locator_type, locator_value):
+    try:
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((locator_type, locator_value))
+        )
+        print("Element found successfully.")
+        return
+    except TimeoutException:
+        print("TimeoutException: Element not found within the given time.")
+    except NoSuchElementException:
+        print("NoSuchElementException: The element could not be located.")
+    except WebDriverException as e:
+        print(f"WebDriverException: General WebDriver error occurred. {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
