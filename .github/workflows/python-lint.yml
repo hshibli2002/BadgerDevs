@@ -1,4 +1,4 @@
-name: Lint Codebase
+name: Lint and Test Codebase
 
 on:
   push:
@@ -9,8 +9,9 @@ on:
       - main
 
 jobs:
-  lint:
+  lint-test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -23,9 +24,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8
+          pip install flake8 mypy pre-commit
 
       - name: Run Flake8 linter
-        run: |
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        run: flake8 . --max-line-length=127 --max-complexity=10 --statistics
+
+      - name: Run MyPy type checker
+        run: mypy . --ignore-missing-imports --show-error-codes --pretty
+
+      - name: Run Pre-commit hooks
+        run: pre-commit run --all-files
