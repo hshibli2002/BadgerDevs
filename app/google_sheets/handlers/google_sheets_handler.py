@@ -15,7 +15,7 @@ class GoogleSheetsHandler:
         except Exception as e:
             raise RuntimeError(f"An error occurred while fetching data: {str(e)}")
 
-    def add_user_input(self, keyword):
+    def add_input(self, keyword):
         try:
             worksheet = self.sheet.worksheet("Sheet1")
 
