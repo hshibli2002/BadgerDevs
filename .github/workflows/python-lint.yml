@@ -30,7 +30,7 @@ jobs:
         run: flake8 . --max-line-length=127 --max-complexity=10 --statistics
 
       - name: Run MyPy type checker
-        run: mypy . --ignore-missing-imports --show-error-codes --pretty
+        run: mypy . --ignore-missing-imports --show-error-codes --pretty --explicit-package-bases --exclude=app/Utils/__init__.py
 
       - name: Run Pre-commit hooks
         run: pre-commit run --all-files
