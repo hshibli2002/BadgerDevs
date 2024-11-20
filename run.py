@@ -5,13 +5,14 @@ from app.routes.blueprints import badgerdevs_api
 def create_app():
     app = Flask(__name__)
 
-    # Register Blueprints
+    # Register Main Blueprint
     app.register_blueprint(badgerdevs_api)
-    app.config["DEBUG"] = True
+    app.debug = True
 
     return app
 
 
 if __name__ == '__main__':
     application = create_app()
+
     application.run(debug=True)

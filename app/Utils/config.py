@@ -1,4 +1,6 @@
 import os
+
+import googleapiclient.discovery
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from dotenv import load_dotenv
@@ -8,7 +10,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
 
 load_dotenv()
 
@@ -72,3 +73,9 @@ def wait_for_page_load(driver, locator_type, locator_value):
         print(f"WebDriverException: General WebDriver error occurred. {e}")
     except Exception as e:
         print(f"Unexpected error: {e}")
+
+
+def youtube_build():
+    return googleapiclient.discovery.build(os.getenv("YOUTUBE_API_SERVICE_NAME"),
+                                           os.getenv("YOUTUBE_API_VERSION"),
+                                           developerKey=os.getenv("YOUTUBE_API_KEY"))

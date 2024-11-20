@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from app.google_sheets.google_sheets_handler import GoogleSheetsHandler
+from app.google_sheets.handlers.google_sheets_handler import GoogleSheetsHandler
 from app.Utils.config import get_google_sheet
 
 google_sheets_api = Blueprint("google_sheets", __name__, url_prefix="/google-sheets/")

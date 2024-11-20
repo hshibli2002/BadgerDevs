@@ -16,8 +16,3 @@ class EcommerceProduct:
             "Website Source": self.website_source,
             "Similarity Score": self.similarity_score,
         }
-
-    def __str__(self):
-        return (f"EcommerceProduct(title={self.title}, "
-                f"description={self.description}, "
-                f"price={self.price})")

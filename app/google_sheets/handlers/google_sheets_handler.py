@@ -35,3 +35,7 @@ class GoogleSheetsHandler:
     def add_ecommerce_data(self, data):
         worksheet = self.sheet.worksheet("Sheet2")
         worksheet.append_rows(data, value_input_option="USER_ENTERED")
+
+    def add_youtube_data(self, data):
+        worksheet = self.sheet.worksheet("Sheet3")
+        worksheet.append_rows(data, value_input_option="USER_ENTERED")
