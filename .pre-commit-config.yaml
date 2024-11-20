@@ -27,5 +27,5 @@ repos:
           - --show-error-codes
           - --pretty
           - --explicit-package-bases
+          - --exclude=app/Utils/__init__.py
           - .
-          - --exclude '/app/Utils/__init__.py'
