@@ -26,4 +26,5 @@ repos:
           - --ignore-missing-imports
           - --show-error-codes
           - --pretty
+          - --explicit-package-bases
           - .
