@@ -5,6 +5,14 @@ from app.models.ecommerce_product import EcommerceProduct
 
 
 def extract_alibaba_product_metadata(product, keyword):
+    """
+    Business logic to extract product metadata from an Alibaba product element.
+
+    :param product: WebElement object representing an Alibaba product.
+    :param keyword: The keyword used to search for the product.
+
+    :return: EcommerceProduct object containing the extracted metadata.
+    """
     description_element = product.find_element(By.CSS_SELECTOR, "h2.search-card-e-title")
     description = description_element.text if description_element else "No description available"
 
@@ -32,6 +40,15 @@ def extract_alibaba_product_metadata(product, keyword):
 
 
 def fetch_alibaba_products(keyword, max_results=10, max_pages=10):
+    """
+    Fetches product data from Alibaba based on the provided keyword.
+
+    :param keyword: The keyword to search for on Alibaba.
+    :param max_results: The maximum number of results to return.
+    :param max_pages: The maximum number of pages to search for results.
+
+    :return: List of EcommerceProduct objects containing the extracted metadata.
+    """
     driver = setup_driver("alibaba")
     config = get_scraper_config("alibaba")
     product_data = []

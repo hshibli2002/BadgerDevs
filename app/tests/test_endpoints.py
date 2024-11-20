@@ -1,3 +1,10 @@
+"""Summary
+In this snippet, we are creating a test script that will test all the API endpoints in the application.
+The script uses the requests library to send HTTP requests to the API endpoints and checks the response
+status code and content.
+"""
+
+
 import os
 import requests
 from dotenv import load_dotenv

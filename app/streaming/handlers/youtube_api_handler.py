@@ -5,6 +5,14 @@ from app.models.youtube_video import YoutubeVideo
 
 
 def youtube_metadata_search(query, max_results=25):
+    """
+    Fetches video metadata from YouTube based on the provided query.
+
+    :param query: The query to search for on YouTube.
+    :param max_results: The maximum number of results to return.
+
+    :return: List of YoutubeVideo objects containing the extracted metadata.
+    """
     youtube = youtube_build()
 
     search_query = youtube.search().list(

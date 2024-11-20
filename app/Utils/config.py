@@ -1,3 +1,9 @@
+"""Summary
+In this snippet, we are defining a set of utility functions that are used by the different parts of the application.
+These functions include setting up the Google Sheets API, setting up the Selenium web driver,
+and fetching the configuration for the web scraper.
+"""
+
 import os
 
 import googleapiclient.discovery

@@ -1,5 +1,8 @@
 class EcommerceProduct:
     def __init__(self, title, description, link, price, website_source, similarity_score):
+        """
+        Initialize an EcommerceProduct object.
+        """
         self.title = title
         self.description = description
         self.link = link
@@ -8,6 +11,9 @@ class EcommerceProduct:
         self.similarity_score = similarity_score
 
     def to_dict(self):
+        """
+        Convert the EcommerceProduct object to a dictionary.
+        """
         return {
             "Product Title": self.title,
             "Product Description": self.description,
