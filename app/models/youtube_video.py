@@ -1,5 +1,8 @@
 class YoutubeVideo:
     def __init__(self, title, channel_name, link, description, likes, views, published_date):
+        """
+        Initialize a YoutubeVideo object.
+        """
         self.title = title
         self.channel_name = channel_name
         self.link = link
@@ -9,6 +12,9 @@ class YoutubeVideo:
         self.published_date = published_date
 
     def to_dict(self):
+        """
+        Convert the YoutubeVideo object to a dictionary.
+        """
         return {
             "video_title": self.title,
             "channel_name": self.channel_name,

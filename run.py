@@ -1,3 +1,8 @@
+"""Summary:
+In this snippet, we are defining the main entry point for the Flask application.
+The create_app function initializes the Flask application and registers the main blueprint.
+"""
+
 from flask import Flask
 from app.routes.blueprints import badgerdevs_api
 

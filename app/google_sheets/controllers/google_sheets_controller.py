@@ -7,6 +7,12 @@ google_sheets_api = Blueprint("google_sheets", __name__, url_prefix="/google-she
 
 @google_sheets_api.route("/input", methods=["POST"])
 def add_user_input():
+    """
+    `POST` request using keyword parameter to store the user input in Google Sheets and
+    search for products on Asos, Alibaba, and YouTube based on the website parameter.
+
+    :return: JSON response with a message detailing the success or failure of the operation.
+    """
     data = request.get_json()
 
     # Validate input

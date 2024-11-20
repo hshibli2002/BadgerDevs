@@ -1,3 +1,10 @@
+"""Summary:
+In this snippet, we are defining a set of utility functions that are used by the different parts of the application.
+These functions include formatting the data from the EcommerceProduct and YoutubeVideo classes into a list of lists.
+
+The format_product_data function takes a list of EcommerceProduct objects and formats the data into a list of lists.
+"""
+
 from datetime import datetime
 
 from app.models.ecommerce_product import EcommerceProduct

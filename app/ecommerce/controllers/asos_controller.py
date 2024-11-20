@@ -10,6 +10,10 @@ asos_api = Blueprint("asos_api", __name__, url_prefix="/asos")
 
 @asos_api.route("/search", methods=["POST"])
 def search_and_store_products():
+    """
+    `POST` request using keyword parameter to search for products on Asos and store the data in Google Sheets.
+    :return: JSON response with a message detailing the success or failure of the operation.
+    """
     data = request.get_json()
     keyword = data.get("keyword")
 

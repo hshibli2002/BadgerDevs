@@ -7,6 +7,14 @@ from app.models.ecommerce_product import EcommerceProduct
 
 
 def extract_asos_product_metadata(product, keyword):
+    """
+    Business logic to extract product metadata from an ASOS product element.
+
+    :param product: WebElement object representing an ASOS product.
+    :param keyword: The keyword used to search for the product.
+
+    :return: EcommerceProduct object containing the extracted metadata.
+    """
     description_element = product.find_element(By.CSS_SELECTOR, "div.productInfo_rwyH5 > p.productDescription_sryaw")
     description = description_element.text if description_element else "No description available"
 
@@ -42,6 +50,15 @@ def extract_asos_product_metadata(product, keyword):
 
 
 def fetch_asos_products(keyword, max_results=10, max_pages=10):
+    """
+    Fetches product data from ASOS based on the provided keyword.
+
+    :param keyword: The keyword to search for on ASOS.
+    :param max_results: The maximum number of results to return.
+    :param max_pages: The maximum number of pages to search for results.
+
+    :return: List of EcommerceProduct objects containing the extracted metadata.
+    """
     driver = setup_driver("asos")
     config = get_scraper_config("asos")
     product_data = []
