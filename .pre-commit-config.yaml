@@ -28,3 +28,4 @@ repos:
           - --pretty
           - --explicit-package-bases
           - .
+          - --exclude './app/Utils/__init__.py'
