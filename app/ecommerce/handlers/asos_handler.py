@@ -41,14 +41,14 @@ def extract_asos_product_metadata(product, keyword):
     )
 
 
-def fetch_asos_products(keyword, max_results=10):
+def fetch_asos_products(keyword, max_results=10, max_pages=10):
     driver = setup_driver("asos")
     config = get_scraper_config("asos")
     product_data = []
     page_number = 0
 
     try:
-        while len(product_data) < max_results:
+        while len(product_data) < max_results and page_number < max_pages:
             page_number += 1
             print(f"Parsing page {page_number}")
 

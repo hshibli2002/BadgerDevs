@@ -31,14 +31,14 @@ def extract_alibaba_product_metadata(product, keyword):
     )
 
 
-def fetch_alibaba_products(keyword, max_results=10):
+def fetch_alibaba_products(keyword, max_results=10, max_pages=10):
     driver = setup_driver("alibaba")
     config = get_scraper_config("alibaba")
     product_data = []
     page_number = 0
 
     try:
-        while len(product_data) < max_results:
+        while len(product_data) < max_results and page_number < max_pages:
             page_number += 1
             print(f"Parsing page {page_number}")
 

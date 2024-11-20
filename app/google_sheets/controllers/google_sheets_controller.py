@@ -1,39 +1,30 @@
 from flask import Blueprint, jsonify, request
-from app.google_sheets.handlers.google_sheets_handler import GoogleSheetsHandler
-from app.Utils.config import get_google_sheet
+
+from app.Utils.website_processor import process_websites, select_api, WEBSITE_APIS
 
 google_sheets_api = Blueprint("google_sheets", __name__, url_prefix="/google-sheets/")
 
 
-@google_sheets_api.route("/get-worksheet-data", methods=["GET"])
-def get_worksheet_data():
-    worksheet_name = request.args.get("worksheet_name")
-    try:
-        sheet = get_google_sheet()
-        sheets_handler = GoogleSheetsHandler(sheet)
-
-        data = sheets_handler.get_worksheet_data(worksheet_name)
-        return jsonify({"data": data}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-@google_sheets_api.route("/add-user-input", methods=["POST"])
+@google_sheets_api.route("/input", methods=["POST"])
 def add_user_input():
     data = request.get_json()
 
-    if not data or 'keyword' not in data:
-        return jsonify({"error": "Keyword not provided"}), 400
+    # Validate input
+    if not data or "keyword" not in data:
+        return jsonify({"error": "Keyword is required"}), 400
 
-    keyword = data['keyword']
+    keyword = data["keyword"]
+    website = data.get("website", "").lower()
+
     try:
-        sheet = get_google_sheet()
-        sheets_handler = GoogleSheetsHandler(sheet)
-
-        result = sheets_handler.add_user_input(keyword)
-        if result["status"] == "exists":
-            return jsonify({"message": result["message"]}), 200
+        if not website:
+            results = process_websites(keyword)
+        elif website in WEBSITE_APIS:
+            results = {website: select_api(WEBSITE_APIS[website], keyword)}
         else:
-            return jsonify({"message": result["message"]}), 201
+            return jsonify({"error": f"Invalid website choice: {website}"}), 400
+
+        return jsonify({"message": "Data successfully processed", "results": results}), 200
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
