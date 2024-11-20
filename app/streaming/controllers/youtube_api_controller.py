@@ -10,7 +10,8 @@ youtube_api = Blueprint("youtube-api", __name__, url_prefix="/youtube")
 
 @youtube_api.route("/search", methods=["POST"])
 def search_youtube():
-    keyword = request.args.get("keyword")
+    data = request.get_json()
+    keyword = data.get("keyword")
 
     if not keyword:
         return {"error": "Keyword parameter is required"}, 400
