@@ -10,12 +10,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="app/Utils/img.png" alt="Logo" width="88" height="88">
-  </a>
-
-  <h3 align="center">BadgerDevs Assessment</h3>
-
+  
   <p align="center">
     Data pipeline that integrates with Google Sheets to populate product data and related multimedia content based on user-input keywords.<br />
   </p>
